@@ -1,0 +1,191 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import alimentos from "../../data/alimentos.json";
+
+// #Renderizado de listas
+// Muestra alimentos desde un archivo JSON local.
+const FoodsPage = () => {
+  // #useState
+  // Controla búsqueda y alimentos seleccionados temporalmente.
+  const [search, setSearch] = useState("");
+  const [selectedFoods, setSelectedFoods] = useState([]);
+
+  // #Formulario no controlado con useRef
+  // Referencia directa al buscador de alimentos.
+  const searchInputRef = useRef(null);
+
+  // #useEffect - montaje de componentes
+  // Al abrir FoodsPage enfoca automáticamente el buscador usando useRef.
+  useEffect(() => {
+    searchInputRef.current?.focus();
+  }, []);
+
+  // #useEffect - limpieza de efectos
+  // Atajo F2 para enfocar rápidamente el buscador de alimentos.
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "F2") {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  // #Query params
+  // Lee y actualiza la categoría desde la URL.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get("categoria") || "";
+
+  const categories = useMemo(() => {
+    return [...new Set(alimentos.map((item) => item.categoria))];
+  }, []);
+
+  // #Manejo de datos y lógica
+  // Filtra alimentos por categoría y texto de búsqueda.
+  const filteredFoods = useMemo(() => {
+    return alimentos.filter((item) => {
+      const matchesCategory = selectedCategory
+        ? item.categoria === selectedCategory
+        : true;
+
+      const matchesSearch = item.alimento
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [search, selectedCategory]);
+
+  // #Manejo de eventos en React
+  // Actualiza el query param de categoría.
+  const handleCategoryChange = (event) => {
+    const value = event.target.value;
+
+    if (value) {
+      setSearchParams({ categoria: value });
+    } else {
+      setSearchParams({});
+    }
+  };
+
+  // #Manejo de eventos en React
+  // Agrega un alimento a la lista temporal de selección.
+  const handleAddFood = (food) => {
+    setSelectedFoods([...selectedFoods, food]);
+  };
+
+  // #Manejo de eventos en React
+  // Quita un alimento seleccionado.
+  const handleRemoveFood = (indexToRemove) => {
+    setSelectedFoods(
+      selectedFoods.filter((_, index) => index !== indexToRemove),
+    );
+  };
+
+  const selectedText = selectedFoods
+    .map((food) => `${food.alimento} (${food.cantidad}, ${food.peso})`)
+    .join(", ");
+
+  return (
+    <section>
+      <h2>Catálogo de alimentos</h2>
+
+      <p>
+        Catálogo local de porciones. Estos alimentos no se guardan en MySQL.
+      </p>
+
+      <div>
+        <label htmlFor="search">Buscar alimento</label>
+        <input
+          ref={searchInputRef}
+          id="search"
+          type="text"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder="Ejemplo: pollo, arroz, manzana"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="category">Filtrar por categoría</label>
+        <select
+          id="category"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
+          <option value="">Todas</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <h3>Resultados</h3>
+
+      {filteredFoods.length === 0 ? (
+        <p>No hay alimentos con esos filtros.</p>
+      ) : (
+        <table border="1">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Categoría</th>
+              <th>Alimento</th>
+              <th>Cantidad</th>
+              <th>Peso</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredFoods.map((food) => (
+              <tr key={food.id}>
+                <td>{food.id}</td>
+                <td>{food.categoria}</td>
+                <td>{food.alimento}</td>
+                <td>{food.cantidad}</td>
+                <td>{food.peso}</td>
+                <td>
+                  <button type="button" onClick={() => handleAddFood(food)}>
+                    Agregar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      <h3>Alimentos seleccionados</h3>
+
+      {selectedFoods.length === 0 ? (
+        <p>No hay alimentos seleccionados.</p>
+      ) : (
+        <ul>
+          {selectedFoods.map((food, index) => (
+            <li key={`${food.id}-${index}`}>
+              {food.alimento} - {food.cantidad} - {food.peso}
+              <button type="button" onClick={() => handleRemoveFood(index)}>
+                Quitar
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <h3>Texto para copiar a dieta</h3>
+
+      <textarea value={selectedText} readOnly rows="5" cols="80" />
+    </section>
+  );
+};
+
+export default FoodsPage;
