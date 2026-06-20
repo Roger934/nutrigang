@@ -13,8 +13,8 @@ const Navbar = () => {
   const navLinkClass = ({ isActive }) =>
     `px-3 py-2 rounded-lg text-sm font-medium transition ${
       isActive
-        ? 'bg-violet-100 text-violet-700'
-        : 'text-gray-600 hover:bg-violet-50 hover:text-violet-700'
+        ? 'bg-emerald-100 text-emerald-700'
+        : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700'
     }`;
 
   return (
@@ -23,10 +23,10 @@ const Navbar = () => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 text-lg font-bold text-gray-950">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-600 text-white shadow-md shadow-violet-200">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-200">
             N
           </span>
-          <span>Nutri<span className="text-violet-600">Gang</span></span>
+          <span>Nutri<span className="text-emerald-600">Gang</span></span>
         </Link>
 
         {/* Navegación */}

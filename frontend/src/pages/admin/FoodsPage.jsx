@@ -158,24 +158,26 @@ const FoodsPage = () => {
       {filteredFoods.length === 0 ? (
         <p>No hay alimentos con esos filtros.</p>
       ) : (
-        <table border="1">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Categoría</th>
-              <th>Alimento</th>
-              <th>Cantidad</th>
-              <th>Peso</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
+        <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Categoría</th>
+                <th>Alimento</th>
+                <th>Cantidad</th>
+                <th>Peso</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {filteredFoods.map((food) => (
-              <FoodRow key={food.id} food={food} onAdd={handleAddFood} />
-            ))}
-          </tbody>
-        </table>
+            <tbody>
+              {filteredFoods.map((food) => (
+                <FoodRow key={food.id} food={food} onAdd={handleAddFood} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <h3>Alimentos seleccionados</h3>
@@ -183,9 +185,9 @@ const FoodsPage = () => {
       {selectedFoods.length === 0 ? (
         <p>No hay alimentos seleccionados.</p>
       ) : (
-        <ul className="grid gap-2 rounded-2xl border border-violet-100 bg-violet-50/40 p-3">
+        <ul className="grid gap-2 rounded-2xl border border-emerald-100 bg-emerald-50/40 p-3">
           {selectedFoods.map((food, index) => (
-            <li key={`${food.id}-${index}`} className="flex flex-col gap-3 rounded-xl border border-violet-100 bg-white p-3 text-sm text-gray-700 sm:flex-row sm:items-center sm:justify-between">
+            <li key={`${food.id}-${index}`} className="flex flex-col gap-3 rounded-xl border border-emerald-100 bg-white p-3 text-sm text-gray-700 sm:flex-row sm:items-center sm:justify-between">
               <span>{food.alimento} - {food.cantidad} - {food.peso}</span>
               <button type="button" onClick={() => handleRemoveFood(index)} className="inline-flex min-h-9 items-center justify-center rounded-lg border border-red-200 bg-white px-3 text-xs font-semibold text-red-600 transition hover:bg-red-50">
                 Quitar
@@ -202,11 +204,11 @@ const FoodsPage = () => {
         readOnly
         rows="5"
         cols="80"
-        className="textarea min-h-32 border-violet-200 bg-white shadow-sm"
+        className="textarea min-h-32 border-emerald-200 bg-white shadow-sm"
         placeholder="Los alimentos que agregues apareceran aqui."
       />
 
-      <form onSubmit={handleNoteSubmit} className="form mt-6">
+      <form onSubmit={handleNoteSubmit} className="foods-note-form mt-6">
         <div className="form-group">
           <label htmlFor="diet-note" className="label">Nota rapida para la dieta</label>
           <input
@@ -217,9 +219,9 @@ const FoodsPage = () => {
             className="input"
             placeholder="Ejemplo: evitar lacteos"
           />
+          {noteMessage && <p className="alert-success mt-2">{noteMessage}</p>}
+          {noteError && <p className="alert-error mt-2" role="alert">{noteError}</p>}
         </div>
-        {noteMessage && <p className="alert-success">{noteMessage}</p>}
-        {noteError && <p className="alert-error">{noteError}</p>}
         <button type="submit" className="btn btn-primary">Guardar nota</button>
       </form>
     </section>

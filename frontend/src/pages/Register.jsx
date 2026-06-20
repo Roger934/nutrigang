@@ -53,7 +53,7 @@ const Register = () => {
     <main className="app-container page">
       <section className="mx-auto grid min-h-[calc(100vh-8rem)] max-w-5xl items-center gap-8 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="hidden lg:block">
-          <p className="text-sm font-semibold text-violet-600">Tu salud, organizada</p>
+          <p className="text-sm font-semibold text-emerald-600">Tu salud, organizada</p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-950">Crea tu espacio nutricional.</h1>
           <p className="mt-4 leading-7 text-gray-600">
             Consulta tus citas, avances y planes alimenticios en una experiencia clara y segura.
@@ -62,7 +62,7 @@ const Register = () => {
 
         <div className="card w-full">
           <div className="mb-6">
-            <p className="text-sm font-semibold text-violet-600">Nueva cuenta</p>
+            <p className="text-sm font-semibold text-emerald-600">Nueva cuenta</p>
             <h2 className="mt-1 text-3xl font-bold text-gray-950">Registro</h2>
             <p className="mt-2 text-sm text-gray-500">Completa tus datos para comenzar.</p>
           </div>
@@ -94,7 +94,7 @@ const Register = () => {
 
           <p className="mt-6 text-center text-sm text-gray-500">
             Ya tienes cuenta?{' '}
-            <Link to="/login" className="font-semibold text-violet-700 hover:text-violet-800">Inicia sesion</Link>
+            <Link to="/login" className="font-semibold text-emerald-700 hover:text-emerald-800">Inicia sesion</Link>
           </p>
         </div>
       </section>

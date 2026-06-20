@@ -33,7 +33,7 @@ function App() {
           fallback={
             <main className="app-container page">
               <div className="card text-center">
-                <p className="text-sm font-medium text-violet-700">
+                <p className="text-sm font-medium text-emerald-700">
                   Cargando página...
                 </p>
               </div>

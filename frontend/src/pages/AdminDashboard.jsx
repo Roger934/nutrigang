@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   return (
     <main className="admin-shell">
       <aside className="admin-sidebar">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-violet-600">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
           Espacio de trabajo
         </p>
         <h1 className="mt-2 text-xl font-bold text-gray-950">Administracion</h1>

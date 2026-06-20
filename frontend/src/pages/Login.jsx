@@ -68,7 +68,7 @@ const Login = () => {
       <section className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-md items-center">
         <div className="card w-full">
           <div className="mb-6 text-center">
-            <p className="mb-2 text-sm font-medium text-violet-700">
+            <p className="mb-2 text-sm font-medium text-emerald-700">
               Acceso al sistema
             </p>
 

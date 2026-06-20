@@ -11,13 +11,15 @@ const FoodRow = memo(({ food, onAdd }) => {
       <td>{food.alimento}</td>
       <td>{food.cantidad}</td>
       <td>{food.peso}</td>
-      <td className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => onAdd(food)}>
-          Agregar
-        </button>
-        <Link to={`/admin/foods/${food.id}`} className="font-semibold text-violet-700">
-          Ver detalle
-        </Link>
+      <td>
+        <div className="flex flex-wrap items-center gap-2">
+          <button type="button" onClick={() => onAdd(food)}>
+            Agregar
+          </button>
+          <Link to={`/admin/foods/${food.id}`} className="font-semibold text-emerald-700">
+            Ver detalle
+          </Link>
+        </div>
       </td>
     </tr>
   );

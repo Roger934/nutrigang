@@ -44,12 +44,12 @@ const ClientDashboard = () => {
 
     return (
       <main className="app-container page">
-        <section className="mx-auto max-w-2xl rounded-3xl border border-violet-100 bg-white p-7 text-center shadow-sm sm:p-10">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100 text-2xl font-bold text-violet-700">N</span>
+        <section className="mx-auto max-w-2xl rounded-3xl border border-emerald-100 bg-white p-7 text-center shadow-sm sm:p-10">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-2xl font-bold text-emerald-700">N</span>
           <h1 className="mt-5 text-2xl font-bold text-gray-950">Panel del Cliente</h1>
           {isUnlinkedPatient ? (
             <>
-              <p className="mt-3 text-lg font-semibold text-violet-700">Tu cuenta ya esta lista</p>
+              <p className="mt-3 text-lg font-semibold text-emerald-700">Tu cuenta ya esta lista</p>
               <p className="mx-auto mt-2 max-w-lg leading-7 text-gray-600">
                 Espera a que tu nutriologo te registre como su nuevo paciente. Cuando complete el alta, aqui podras consultar tu perfil, citas, mediciones y dieta.
               </p>
@@ -83,7 +83,7 @@ const ClientDashboard = () => {
     <main className="app-container page client-content">
       <div className="page-header">
         <div>
-          <p className="text-sm font-semibold text-violet-600">Mi espacio</p>
+          <p className="text-sm font-semibold text-emerald-600">Mi espacio</p>
           <h1 className="page-title mt-1">Panel del Cliente</h1>
           <p className="page-subtitle mt-2">Consulta tu informacion nutricional y tu progreso.</p>
         </div>
