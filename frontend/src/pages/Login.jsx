@@ -64,40 +64,74 @@ const Login = () => {
   };
 
   return (
-    <main>
-      <h1>Login</h1>
+    <main className="app-container page">
+      <section className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-md items-center">
+        <div className="card w-full">
+          <div className="mb-6 text-center">
+            <p className="mb-2 text-sm font-medium text-violet-700">
+              Acceso al sistema
+            </p>
 
-      {error && <p>{error}</p>}
+            <h1 className="text-3xl font-bold text-gray-950">
+              Iniciar sesión
+            </h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Correo</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+            <p className="mt-2 text-sm text-gray-500">
+              Ingresa tus credenciales para acceder a NutriGang.
+            </p>
+          </div>
+
+          {error && (
+            <p className="alert-error mb-4">
+              {error}
+            </p>
+          )}
+
+          <form onSubmit={handleSubmit} className="form">
+            <div className="form-group">
+              <label htmlFor="email" className="label">
+                Correo
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="input"
+                placeholder="correo@ejemplo.com"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password" className="label">
+                Contraseña
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="input"
+                placeholder="Ingresa tu contraseña"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary w-full"
+            >
+              {loading ? 'Ingresando...' : 'Ingresar'}
+            </button>
+          </form>
         </div>
-
-        <div>
-          <label htmlFor="password">Contraseña</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Ingresando...' : 'Ingresar'}
-        </button>
-      </form>
+      </section>
     </main>
   );
 };

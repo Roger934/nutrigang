@@ -109,6 +109,7 @@ const FoodsPage = () => {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Ejemplo: pollo, arroz, manzana"
+          className="input"
         />
       </div>
 
@@ -118,6 +119,7 @@ const FoodsPage = () => {
           id="category"
           value={selectedCategory}
           onChange={handleCategoryChange}
+          className="select"
         >
           <option value="">Todas</option>
           {categories.map((category) => (
@@ -169,11 +171,11 @@ const FoodsPage = () => {
       {selectedFoods.length === 0 ? (
         <p>No hay alimentos seleccionados.</p>
       ) : (
-        <ul>
+        <ul className="grid gap-2 rounded-2xl border border-violet-100 bg-violet-50/40 p-3">
           {selectedFoods.map((food, index) => (
-            <li key={`${food.id}-${index}`}>
-              {food.alimento} - {food.cantidad} - {food.peso}
-              <button type="button" onClick={() => handleRemoveFood(index)}>
+            <li key={`${food.id}-${index}`} className="flex flex-col gap-3 rounded-xl border border-violet-100 bg-white p-3 text-sm text-gray-700 sm:flex-row sm:items-center sm:justify-between">
+              <span>{food.alimento} - {food.cantidad} - {food.peso}</span>
+              <button type="button" onClick={() => handleRemoveFood(index)} className="inline-flex min-h-9 items-center justify-center rounded-lg border border-red-200 bg-white px-3 text-xs font-semibold text-red-600 transition hover:bg-red-50">
                 Quitar
               </button>
             </li>
@@ -183,7 +185,14 @@ const FoodsPage = () => {
 
       <h3>Texto para copiar a dieta</h3>
 
-      <textarea value={selectedText} readOnly rows="5" cols="80" />
+      <textarea
+        value={selectedText}
+        readOnly
+        rows="5"
+        cols="80"
+        className="textarea min-h-32 border-violet-200 bg-white shadow-sm"
+        placeholder="Los alimentos que agregues apareceran aqui."
+      />
     </section>
   );
 };
