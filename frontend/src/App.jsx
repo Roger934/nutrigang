@@ -19,6 +19,7 @@ const MeasurementsPage = lazy(() => import('./pages/admin/MeasurementsPage'));
 const CalculationsPage = lazy(() => import('./pages/admin/CalculationsPage'));
 const DietsPage = lazy(() => import('./pages/admin/DietsPage'));
 const FoodsPage = lazy(() => import('./pages/admin/FoodsPage'));
+const FoodDetail = lazy(() => import('./pages/admin/FoodDetail'));
 
 // #React Router
 function App() {
@@ -59,6 +60,7 @@ function App() {
               <Route path="calculations" element={<CalculationsPage />} />
               <Route path="diets" element={<DietsPage />} />
               <Route path="foods" element={<FoodsPage />} />
+              <Route path="foods/:foodId" element={<FoodDetail />} />
             </Route>
 
             <Route

@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import FoodRow from "../../components/FoodRow";
 import alimentos from "../../data/alimentos.json";
 
 // #Renderizado de listas
@@ -9,10 +10,13 @@ const FoodsPage = () => {
   // Controla búsqueda y alimentos seleccionados temporalmente.
   const [search, setSearch] = useState("");
   const [selectedFoods, setSelectedFoods] = useState([]);
+  const [noteMessage, setNoteMessage] = useState("");
+  const [noteError, setNoteError] = useState("");
 
   // #Formulario no controlado con useRef
   // Referencia directa al buscador de alimentos.
   const searchInputRef = useRef(null);
+  const noteInputRef = useRef(null);
 
   // #useEffect - montaje de componentes
   // Al abrir FoodsPage enfoca automáticamente el buscador usando useRef.
@@ -42,6 +46,7 @@ const FoodsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get("categoria") || "";
 
+  // #Aportacion 1: useMemo reutiliza calculos mientras sus datos no cambien.
   const categories = useMemo(() => {
     return [...new Set(alimentos.map((item) => item.categoria))];
   }, []);
@@ -76,8 +81,26 @@ const FoodsPage = () => {
 
   // #Manejo de eventos en React
   // Agrega un alimento a la lista temporal de selección.
-  const handleAddFood = (food) => {
-    setSelectedFoods([...selectedFoods, food]);
+  const handleAddFood = useCallback((food) => {
+    setSelectedFoods((currentFoods) => [...currentFoods, food]);
+  }, []);
+
+  // #Formulario no controlado: lee y valida el valor directamente con useRef.
+  const handleNoteSubmit = (event) => {
+    event.preventDefault();
+    const note = noteInputRef.current.value.trim();
+
+    setNoteMessage("");
+    setNoteError("");
+
+    if (!note) {
+      setNoteError("Escribe una nota antes de guardarla.");
+      noteInputRef.current.focus();
+      return;
+    }
+
+    setNoteMessage(`Nota guardada: ${note}`);
+    noteInputRef.current.value = "";
   };
 
   // #Manejo de eventos en React
@@ -149,18 +172,7 @@ const FoodsPage = () => {
 
           <tbody>
             {filteredFoods.map((food) => (
-              <tr key={food.id}>
-                <td>{food.id}</td>
-                <td>{food.categoria}</td>
-                <td>{food.alimento}</td>
-                <td>{food.cantidad}</td>
-                <td>{food.peso}</td>
-                <td>
-                  <button type="button" onClick={() => handleAddFood(food)}>
-                    Agregar
-                  </button>
-                </td>
-              </tr>
+              <FoodRow key={food.id} food={food} onAdd={handleAddFood} />
             ))}
           </tbody>
         </table>
@@ -193,6 +205,23 @@ const FoodsPage = () => {
         className="textarea min-h-32 border-violet-200 bg-white shadow-sm"
         placeholder="Los alimentos que agregues apareceran aqui."
       />
+
+      <form onSubmit={handleNoteSubmit} className="form mt-6">
+        <div className="form-group">
+          <label htmlFor="diet-note" className="label">Nota rapida para la dieta</label>
+          <input
+            ref={noteInputRef}
+            id="diet-note"
+            name="dietNote"
+            type="text"
+            className="input"
+            placeholder="Ejemplo: evitar lacteos"
+          />
+        </div>
+        {noteMessage && <p className="alert-success">{noteMessage}</p>}
+        {noteError && <p className="alert-error">{noteError}</p>}
+        <button type="submit" className="btn btn-primary">Guardar nota</button>
+      </form>
     </section>
   );
 };
